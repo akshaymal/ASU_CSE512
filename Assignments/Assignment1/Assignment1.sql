@@ -1,4 +1,3 @@
-
 /*
 Creating the table and loading the dataset
 */
@@ -13,15 +12,15 @@ ALTER TABLE ratings DROP COLUMN temp1, DROP COLUMN temp3, DROP COLUMN temp5, DRO
 -- Part A
 /* Write the queries for Part A*/
 -- Query 1
-SELECT * FROM RATINGS LIMIT 5;
+SELECT * FROM RATINGS WHERE rating < 1.0;
 -- Query 2
-SELECT MIN(rating), MAX(rating), AVG(rating) FROM RATINGS;
+SELECT * FROM RATINGS WHERE rating >= 1.0 AND rating < 2.0;
 -- Query 3
-SELECT MIN(userid), MAX(userid) FROM RATINGS;
+SELECT * FROM RATINGS WHERE rating >= 2.0 AND rating < 3.0;
 -- Query 4
-SELECT AVG(rating) FROM RATINGS GROUP BY userid;
+SELECT * FROM RATINGS WHERE rating >= 3.0 AND rating < 4.0;
 -- Query 5
-SELECT DISTINCT(movieid) FROM RATINGS WHERE rating > 4.0 LIMIT 10;
+SELECT * FROM RATINGS WHERE rating >= 4.0;
 
 
 -- Part B
@@ -49,7 +48,7 @@ Fragment 2: Contains rows with ratings in the range of [3.0,4.0]
 Fragment 3: Contains rows with ratings in the range of [4.0,5.0]
 
 Completeness - All rows in the RATINGS table contain rating in the range of [0,5]. As the fragments are created on the criteria of
-               rating span over the entire range, complete data is captured by the fragments.
+               rating span over the entire range (fragment created in the range of [0,5]), complete data is captured by the fragments.
 Reconstruction - On performing UNION on all fragments B1_1, B1_2, B1_3, we are able to reconstruct the original table.
 Disjointness (not satisfied) - On performing UNION ALL on all fragments, we will notice that a lot of rows/tuples are repeated.
                              - SELECT * FROM B1_1 UNION ALL SELECT * FROM B1_2 UNION ALL SELECT * FROM B1_3;
@@ -73,7 +72,7 @@ Fragment 1: Contains userid column from RATINGS table.
 Fragment 2: Contains movieid column from RATINGS table.
 Fragment 3: Contains rating column from RATINGS table.
 
-Completeness - RATINGS table contains 3 columns: userid, movieid and rating. These are encapsulated in 3 fragments: B2_1, B2_2 and B2_3.
+Completeness - RATINGS table contains 3 columns: userid, movieid and rating. These are encapsulated in 3 fragments: B2_1, B2_2 and B2_3 respectively.
                If these fragments were to be joined, we will get the original RATINGS table.
 Reconstruction (not satisfied) - As there is not foreign key amongst the fragments, there is no possible manner to construct the original table.
 Disjointness - If the 3 fragments were to be combined, we will obtain the original RATINGS table without any repetition as no columns have been repeated. 
@@ -128,36 +127,34 @@ SELECT * INTO f2 FROM RATINGS WHERE rating >= 3.0 AND rating <= 4.0;
 SELECT * INTO f3 FROM RATINGS WHERE rating > 4.0;
 
 -- Query 1
-SELECT * FROM f1 LIMIT 5;
+SELECT * FROM f1 WHERE rating < 1.0;
 -- Query 2
-SELECT MIN(rating), MAX(rating), AVG(rating) FROM f1;
+SELECT * FROM f1 WHERE rating >= 1.0 AND rating < 2.0;
 -- Query 3
-SELECT MIN(userid), MAX(userid) FROM f1;
+SELECT * FROM f1 WHERE rating >= 2.0 AND rating < 3.0;
 -- Query 4
-SELECT AVG(rating) FROM f1 GROUP BY userid;
+SELECT * FROM f1 WHERE rating >= 3.0 AND rating < 4.0;
 -- Query 5
-SELECT DISTINCT(movieid) FROM f1 WHERE rating > 4.0 LIMIT 10;
-
+SELECT * FROM f1 WHERE rating >= 4.0;
 
 -- Query 6
-SELECT * FROM f2 LIMIT 5;
+SELECT * FROM f2 WHERE rating < 1.0;
 -- Query 7
-SELECT MIN(rating), MAX(rating), AVG(rating) FROM f2;
+SELECT * FROM f2 WHERE rating >= 1.0 AND rating < 2.0;
 -- Query 8
-SELECT MIN(userid), MAX(userid) FROM f2;
+SELECT * FROM f2 WHERE rating >= 2.0 AND rating < 3.0;
 -- Query 9
-SELECT AVG(rating) FROM f2 GROUP BY userid;
+SELECT * FROM f2 WHERE rating >= 3.0 AND rating < 4.0;
 -- Query 10
-SELECT DISTINCT(movieid) FROM f2 WHERE rating > 4.0 LIMIT 10;
-
+SELECT * FROM f2 WHERE rating >= 4.0;
 
 -- Query 11
-SELECT * FROM f3 LIMIT 5;
+SELECT * FROM f3 WHERE rating < 1.0;
 -- Query 12
-SELECT MIN(rating), MAX(rating), AVG(rating) FROM f3;
+SELECT * FROM f3 WHERE rating >= 1.0 AND rating < 2.0;
 -- Query 13
-SELECT MIN(userid), MAX(userid) FROM f3;
+SELECT * FROM f3 WHERE rating >= 2.0 AND rating < 3.0;
 -- Query 14
-SELECT AVG(rating) FROM f3 GROUP BY userid;
+SELECT * FROM f3 WHERE rating >= 3.0 AND rating < 4.0;
 -- Query 15
-SELECT DISTINCT(movieid) FROM f3 WHERE rating > 4.0 LIMIT 10;
+SELECT * FROM f3 WHERE rating >= 4.0;
