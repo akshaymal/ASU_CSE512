@@ -12,7 +12,7 @@ import Assignment2_Interface as Assignment2
 DATABASE_NAME = 'dds_assignment2'
 
 def getOpenConnection(user='postgres', password='12345', dbname='dds_assignment2'):
-    return psycopg2.connect("dbname='" + dbname + "' user='" + user + "' host='localhost' password='" + password + "'")
+    return psycopg2.connect("dbname='" + dbname + "' user='" + user + "' host='localhost' port=5433 password='" + password + "'")
 
 def createDB(dbname='dds_assignment2'):
     """
@@ -111,8 +111,8 @@ if __name__ == '__main__':
             con.commit()
 
         #Loading two tables points and rectangles
-        loadPoints('points', 'points.csv', con)
-        loadRectangles('rectangles', 'rectangles.csv', con)
+        loadPoints('points', '/Users/akshay/workspace/github_akshaymal/ASU_CSE512/Assignments/Assignment2/Input-Output/points.csv', con)
+        loadRectangles('rectangles', '/Users/akshay/workspace/github_akshaymal/ASU_CSE512/Assignments/Assignment2/Input-Output/rectangles.csv', con)
         print("Points and rectangles data loaded successfully")
 
         # Calling ParallelJoin
